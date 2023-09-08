@@ -1,0 +1,17 @@
+https://www.youtube.com/redirect?event=video_description&redir_token=QUFFLUhqbDB0c0N6YVRHQVhOUi1JWXVoSXV5QTh1NVhjQXxBQ3Jtc0tuN3RxaXR3OHBMNFZKNkpkX295dmI5Umo5UWdmWHF4c2JSNU9kU3M4VXplMTJvc3pNSWE5MHpOZkl6N3psTC11SjdVNWZtR0c3RDFmZHF6eEpXeUs2eGNWR0pCYjJSUld6TnVrSHlWTXFtOWxkTnlSQQ&q=https%3A%2F%2Fgithub.com%2Fsubhadipghorui%2Flaravel-angular-api-authentication-full&v=P3vDTAkwqAQ
+
+
+// crear un componente
+// ng g c components/login --skip-tests
+ng g c components/home --skip-tests
+ng g c components/dashboard --skip-tests
+ng g c components/logout --skip-tests
+ng g c components/reset-password --skip-tests
+ng g c components/forgot-password --skip-tests
+
+ //crear un servicio
+// ng g s services/Authentication --skip-tests
+
+
+// crear un auth guard
+ng g guard services/auth --skip-tests
