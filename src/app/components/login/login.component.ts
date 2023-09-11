@@ -9,17 +9,18 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
+
 export class LoginComponent implements OnInit {
   constructor(private router:Router, private auth:AuthenticationService) {}
   ngOnInit(): void {
-    throw new Error('Method not implemented.');
+    // throw new Error('Method not implemented.');
   }
 
   onSubmit(form:NgForm){
     const email = form.value.email;
     const password = form.value.password;
 
-    // console.log(email, password);
+    console.log("Login: ", email, password);
     this.auth.login(email, password).subscribe((res:any)=>{
       // console.log(res);
       localStorage.setItem('user', JSON.stringify(res))

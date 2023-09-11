@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -18,6 +19,7 @@ export class AuthenticationService {
    // Status
    status() {
     const localData: any = localStorage.getItem('user');
+    // console.log("first localData", localData)
     if (!localData) {
       this.isLoggedIn.next(false);
        console.log('User not lgged in !!');
@@ -25,6 +27,8 @@ export class AuthenticationService {
       const userObj = JSON.parse(localData);
       const token_expires_at = new Date(userObj.token_expires_at);
       const current_date = new Date();
+      // console.log("servicio1: ", token_expires_at, current_date)
+      // console.log("servicio2: ", token_expires_at > current_date ? "true" : "false")
       if (token_expires_at > current_date) {
         this.isLoggedIn.next(true);
       } else {
@@ -37,7 +41,7 @@ export class AuthenticationService {
 
   // Login
   login(email: string, password: string) {
-    return this.http.post('http://localhost:8000/api/login', {
+    return this.http.post('http://127.0.0.1:8000/api/login', {
       email: email,
       password: password,
     });

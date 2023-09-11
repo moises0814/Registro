@@ -1,40 +1,32 @@
 import { inject } from '@angular/core';
-import { CanActivateFn,Router } from '@angular/router';
+import { CanActivateFn, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AuthenticationService } from './authentication.service';
-import { map, take} from 'rxjs/operators';
+import { map, take, tap } from 'rxjs/operators';
 
-// @Injectable({
-//   providedIn: 'root'
-// })
 
-export const AuthGuard: CanActivateFn = (route, state, ) => {
-  const AutService = inject(AuthenticationService);
-
-  return AutService.status().pipe(
+export const AuthGuard: CanActivateFn = (route, state) => {
+  const authService = inject(AuthenticationService) as AuthenticationService;
+  const router = inject(Router) as Router;
+  return authService.status().pipe(
     take(1),
-    map((isLoggedIn: boolean) => {
+    tap((isLoggedIn: boolean) => {
       if (!isLoggedIn) {
-        const router = inject(Router);
-        router.navigate(['login']);
+        router.navigate(['/login']); // Redirige al usuario a la página de inicio de sesión
         return false;
       }
       return true;
     })
+
+
+
+
+    // tap((isLoggedIn: boolean) => {
+    //   if (!isLoggedIn) {
+    //     router.navigate(['/login']); // Redirige al usuario a la página de inicio de sesión
+    //     return false;
+    //   }
+    //   return true;
+    // })
   );
-
-
-  // const token = localStorage.getItem('token');
-  // console.log(route);
-  // console.log(state);
-  // const router = inject(Router);
-  // console.log('Im in auth guard');
-  // console.log('token', token);
-  // if(token) {
-  //   return true;
-  // } else {
-  //   router.navigate(['login']);
-  //   return false;
-  // }
-
 };

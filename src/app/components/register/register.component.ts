@@ -16,7 +16,7 @@ export class RegisterComponent implements OnInit {
   }
   constructor(private auth:AuthenticationService, private router:Router) { }
   ngOnInit(): void {
-    throw new Error('Method not implemented.');
+    // throw new Error('Method not implemented.');
   }
 
   onSubmit(form:NgForm){
@@ -24,6 +24,8 @@ export class RegisterComponent implements OnInit {
     const email = form.value.email;
     const password = form.value.password;
     const password_confirmation = form.value.password_confirmation;
+
+    console.log(name,email,password,password_confirmation);
 
     this.auth.register(name,email,password,password_confirmation).subscribe((res)=>{
       // console.log(res);

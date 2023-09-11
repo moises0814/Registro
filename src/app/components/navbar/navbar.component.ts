@@ -12,6 +12,7 @@ export class NavbarComponent implements OnInit {
   constructor(private auth:AuthenticationService) { }
   ngOnInit(): void {
     this.auth.status().subscribe((res) => {
+      console.log("Navbar", res)
       this.loggedIn = res;
       // console.log('navbar:' + this.loggedIn);
     }, (err) => {

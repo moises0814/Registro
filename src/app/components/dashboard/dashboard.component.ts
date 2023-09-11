@@ -18,11 +18,11 @@ export class DashboardComponent implements OnInit {
     this.auth.status().subscribe((res)=>{
       console.log(res);
     })
-    this.auth.user().subscribe((res)=>{
-      this.user = res;
-    }, (err) =>{
-      console.log(err);
-    })
+    // this.auth.user().subscribe((res)=>{
+    //   this.user = res;
+    // }, (err) =>{
+    //   console.log(err);
+    // })
   }
 
 }

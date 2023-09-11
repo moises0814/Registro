@@ -18,7 +18,7 @@ export class LogoutComponent implements OnInit{
   logout(){
     // console.log(this.checkbox);
     this.auth.logout(this.checkbox).subscribe((res)=>{
-      console.log(res);
+      console.log('log: ', res);
       localStorage.removeItem('user');
 
       this.auth.toggleLogin(false);
