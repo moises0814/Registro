@@ -9,17 +9,32 @@ import { map, take} from 'rxjs/operators';
 // })
 
 export const AuthGuard: CanActivateFn = (route, state, ) => {
-  const token = localStorage.getItem('token');
-  console.log(route);
-  console.log(state);
-  const router = inject(Router);
-  console.log('Im in auth guard');
-  console.log('token', token);
-  if(token) {
-    return true;
-  } else {
-    router.navigate(['login']);
-    return false;
-  }
+  const AutService = inject(AuthenticationService);
+
+  return AutService.status().pipe(
+    take(1),
+    map((isLoggedIn: boolean) => {
+      if (!isLoggedIn) {
+        const router = inject(Router);
+        router.navigate(['login']);
+        return false;
+      }
+      return true;
+    })
+  );
+
+
+  // const token = localStorage.getItem('token');
+  // console.log(route);
+  // console.log(state);
+  // const router = inject(Router);
+  // console.log('Im in auth guard');
+  // console.log('token', token);
+  // if(token) {
+  //   return true;
+  // } else {
+  //   router.navigate(['login']);
+  //   return false;
+  // }
 
 };
