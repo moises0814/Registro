@@ -1,11 +1,13 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { Router } from '@angular/router';
+import { Observable, BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
+  private url = 'http://localhost:8000/api';
   private isLoggedIn = new BehaviorSubject<boolean>(false);
 
 
@@ -16,47 +18,70 @@ export class AuthenticationService {
     this.isLoggedIn.next(state);
   }
 
-   // Status
-   status() {
-    const localData: any = localStorage.getItem('user');
-    // console.log("first localData", localData)
-    if (!localData) {
-      this.isLoggedIn.next(false);
-       console.log('User not lgged in !!');
-    } else {
-      const userObj = JSON.parse(localData);
-      const token_expires_at = new Date(userObj.token_expires_at);
-      const current_date = new Date();
-      // console.log("servicio1: ", token_expires_at, current_date)
-      // console.log("servicio2: ", token_expires_at > current_date ? "true" : "false")
-      if (token_expires_at > current_date) {
-        this.isLoggedIn.next(true);
-      } else {
-        this.isLoggedIn.next(false);
-         console.log('Token Expires!!');
-      }
-    }
-    return this.isLoggedIn.asObservable();
+   // tslint:disable-next-line:typedef
+   loggedIng(){
+    return !!localStorage.getItem('token');
   }
+
+  // tslint:disable-next-line:typedef
+  getToken(){
+    return localStorage.getItem('token');
+  }
+
+  // tslint:disable-next-line:typedef
+
+
+
+   // Status
+  //  status() {
+  //   const localData: any = localStorage.getItem('user');
+  //   // console.log("service Status: ", localData)
+  //   if (!localData) {
+  //     this.isLoggedIn.next(false);
+  //      console.log('User not lgged in !!');
+  //   } else {
+  //     const userObj = JSON.parse(localData);
+  //     const token_expires_at = new Date(userObj.token_expires_at);
+  //     const current_date = new Date();
+  //     if (token_expires_at > current_date) {
+  //       this.isLoggedIn.next(true);
+  //     } else {
+  //       this.isLoggedIn.next(false);
+  //        console.log('Token Expires!!');
+  //     }
+  //   }
+  //   return this.isLoggedIn.asObservable();
+  // }
 
   // Login
   login(email: string, password: string) {
-    return this.http.post('http://127.0.0.1:8000/api/login', {
+    return this.http.post(this.url +  '/login', {
       email: email,
       password: password,
     });
   }
 
+  // login(email: string, password: string): Observable<any>{
+  //   return this.http.post(
+  //     this.url + '/login',
+  //     {
+  //       email: email,
+  //       password: password,
+  //     }
+  //   );
+  // }
+
    // User Info
    user() {
     const user: any = localStorage.getItem('user');
     const userObj = JSON.parse(user);
+    // console.log("userObj: ", userObj.token)
 
     const token = userObj.token;
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`,
     });
-    return this.http.get('http://localhost:8000/api/user', {
+    return this.http.post(this.url +  '/user', {
       headers: headers,
     });
   }
@@ -71,7 +96,7 @@ export class AuthenticationService {
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`,
     });
-    return this.http.post('http://localhost:8000/api/logout', {allDevice:allDevice}, {headers:headers});
+    return this.http.post(this.url +  '/logout', {allDevice:allDevice}, {headers:headers});
   }
 
   // Register
@@ -82,12 +107,12 @@ export class AuthenticationService {
       password:password,
       password_confirmation:password_confirmation,
     }
-    return this.http.post('http://localhost:8000/api/register', data);
+    return this.http.post(this.url +  '/register', data);
   }
 
   // Forgot Pass
   forgot(email:string){
-    return this.http.post('http://localhost:8000/api/forgot', {email:email});
+    return this.http.post(this.url +  '/forgot', {email:email});
   }
 
   // Reset Pass
@@ -98,7 +123,7 @@ export class AuthenticationService {
       password:password,
       password_confirmation:password_confirmation
     }
-    return this.http.post('http://localhost:8000/api/reset', data);
+    return this.http.post(this.url +  '/reset', data);
   }
 
 

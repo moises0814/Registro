@@ -1,8 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 
 :root{
-  --color-default:#004f83;
-  --color-second:#0067ac;
+  --color-default:#5CCEDF;
+  /* --color-default:#004f83; */
+  /* --color-second:#0067ac; */
+  --color-second:#5CCEDF;
   --color-white:#fff;
   --color-body:#e4e9f7;
   --color-light:#e0e0e0;
@@ -26,6 +28,7 @@ body{
   padding: 6px 14px;
   z-index: 99;
   background-color: var(--color-default);
+  /* background-color: #5CCCED !important; */
   transition: all .5s ease;
   position: fixed;
   top:0;

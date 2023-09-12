@@ -11,18 +11,19 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 export class DashboardComponent implements OnInit {
   constructor(private auth:AuthenticationService) {}
 
-  user:any;
+  user:any = [];
 
   ngOnInit(): void {
     // Check status
-    this.auth.status().subscribe((res)=>{
-      console.log(res);
-    })
-    // this.auth.user().subscribe((res)=>{
-    //   this.user = res;
-    // }, (err) =>{
-    //   console.log(err);
+    // this.auth.status().subscribe((res)=>{
+    //   console.log(res);
     // })
+    this.auth.user().subscribe((res)=>{
+      this.user = res;
+      console.log(res);
+    }, (err) =>{
+      console.log(err);
+    })
   }
 
 }
